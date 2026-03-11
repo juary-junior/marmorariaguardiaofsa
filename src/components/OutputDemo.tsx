@@ -195,10 +195,111 @@ const OutputDemo = () => {
                 O App Router (<code className="text-foreground">app/</code>) é o ponto de entrada principal do Next.js
               </li>
             </ul>
+        </div>
+        </div>
+      </div>
+
+      {/* Recommended structure */}
+      <div className="ml-6 tree-line-vertical pl-6 mt-6">
+        <div className="flex items-start gap-3 py-2">
+          <span className="tree-char shrink-0 select-none text-sm sm:text-base">└──</span>
+          <div className="flex-1">
+            <p className="font-mono text-xs font-bold text-primary mb-3">✓ estrutura recomendada após limpeza</p>
+            <RecommendedTree />
           </div>
         </div>
       </div>
     </section>
+  );
+};
+
+const recommendedTree = `Marmoraria-Guardiao/
+├── app/                                # App Router (Next.js 15)
+│   ├── (home)/                         # grupo de rotas — página inicial
+│   │   └── page.tsx
+│   ├── contato/                        # rota /contato
+│   │   └── page.tsx
+│   ├── servicos/                       # rota /servicos
+│   │   └── page.tsx
+│   ├── materiais/                      # rota /materiais
+│   │   └── page.tsx
+│   ├── favicon.ico
+│   ├── globals.css
+│   └── layout.tsx                      # layout raiz (metadata, fontes)
+├── components/                         # componentes reutilizáveis
+│   ├── ui/                             # primitivos de UI
+│   │   ├── Button.tsx
+│   │   └── Card.tsx
+│   ├── Contact.tsx
+│   ├── Conversion.tsx
+│   ├── Footer.tsx
+│   ├── Header.tsx
+│   ├── Hero.tsx
+│   ├── Materials.tsx
+│   ├── Services.tsx
+│   └── Testimonials.tsx
+├── lib/                                # utilitários e helpers
+│   ├── constants.ts                    # ← movido da raiz
+│   └── metadata.ts                     # ← convertido de .json
+├── public/                             # assets estáticos
+│   ├── images/                         # ← organizar imagens em subpasta
+│   │   ├── area-gourmet.png
+│   │   ├── cozinha.jpg
+│   │   └── logo.jpg
+│   └── favicon.ico
+├── .gitignore
+├── eslint.config.mjs
+├── next-env.d.ts
+├── next.config.ts
+├── package.json
+├── postcss.config.mjs
+├── README.md
+└── tsconfig.json`;
+
+const RecommendedTree = () => {
+  return (
+    <div className="rounded-sm border border-primary/30 bg-primary/5 p-4">
+      <div className="flex items-center justify-between mb-3">
+        <span className="font-mono text-xs text-muted-foreground">// após remoção de duplicatas e resquícios do Vite</span>
+        <CopyButton textToCopy={recommendedTree} />
+      </div>
+      <pre className="font-mono text-[10px] leading-relaxed text-foreground sm:text-xs overflow-x-auto">
+        {recommendedTree.split("\n").map((line, i) => {
+          const commentIdx = line.indexOf("# ");
+          const codePart = commentIdx > -1 ? line.slice(0, commentIdx) : line;
+          const commentPart = commentIdx > -1 ? line.slice(commentIdx) : "";
+
+          const match = codePart.match(/^(\s*[├└│─\s]*)(.*)/);
+          if (match && /[├└│]/.test(match[1])) {
+            return (
+              <span key={i} className="block">
+                <span className="tree-char">{match[1]}</span>
+                <span>{match[2]}</span>
+                {commentPart && <span className="text-muted-foreground"> {commentPart}</span>}
+              </span>
+            );
+          }
+          return (
+            <span key={i} className="block">
+              {i === 0 ? (
+                <span className="text-primary font-bold">{codePart}</span>
+              ) : (
+                <span>{codePart}</span>
+              )}
+              {commentPart && <span className="text-muted-foreground"> {commentPart}</span>}
+            </span>
+          );
+        })}
+      </pre>
+      <div className="mt-4 border-t border-border pt-3 space-y-1.5">
+        <p className="font-mono text-[10px] text-muted-foreground sm:text-xs">
+          <span className="text-destructive font-bold">−</span> removidos: <code className="text-foreground">App.tsx</code> <code className="text-foreground">index.tsx</code> <code className="text-foreground">index.html</code> <code className="text-foreground">vite.config.ts</code> <code className="text-foreground">*.copy.*</code>
+        </p>
+        <p className="font-mono text-[10px] text-muted-foreground sm:text-xs">
+          <span className="text-primary font-bold">+</span> adicionados: <code className="text-foreground">lib/</code> para utilitários, <code className="text-foreground">public/images/</code> para assets, rotas separadas no App Router
+        </p>
+      </div>
+    </div>
   );
 };
 
