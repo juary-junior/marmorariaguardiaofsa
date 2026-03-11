@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        mono: ["Space Mono", "monospace"],
+        display: ["Playfair Display", "serif"],
         sans: ["Inter", "sans-serif"],
       },
       colors: {
@@ -51,9 +51,7 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        "tree-line": "hsl(var(--tree-line))",
-        "tree-node": "hsl(var(--tree-node))",
-        "terminal-green": "hsl(var(--terminal-green))",
+        whatsapp: "hsl(var(--whatsapp))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
