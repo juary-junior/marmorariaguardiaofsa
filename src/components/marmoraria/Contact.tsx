@@ -46,7 +46,7 @@ const Contact = () => {
               Orçamento via <span className="text-whatsapp">WhatsApp</span>
             </h3>
             <p className="mt-3 max-w-xs text-sm text-muted-foreground">
-              Clique abaixo e inicie uma conversa agora. Resposta garantida em menos de 15 minutos em horário comercial.
+              Clique abaixo e inicie uma conversa agora.
             </p>
             <a
               href={whatsappUrl}
